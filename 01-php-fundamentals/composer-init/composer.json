@@ -1,0 +1,19 @@
+{
+    "name": "kasteion/composer-init",
+    "description": "Ejemplo Composer",
+    "type": "library",
+    "require": {
+        "nesbot/carbon": "^2.0@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fredy Castellón",
+            "email": "castellonbedoya@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
