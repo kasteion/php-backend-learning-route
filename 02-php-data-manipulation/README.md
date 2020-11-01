@@ -83,24 +83,55 @@ Ahora puedo crear mi carpeta test y un test llamado ValidateTest.php el estandar
 
 ## REVISANDO NUESTRO PROYECTO
 
+La manera de trabajar no es sobre un index.php sino sobre la estructura de un proyecto real apoyandose en composer y componentes de terceros.
+
 # FUNCIONES
 
 ## ARGUMENTOS
 
+Es lo que colocamos dentro de los parentesís en las funciones. 
+
+También tenemos el concepto de referencia (Que apunta a otro elemento).
+
+También tenemos el concetpo de argumento predeterminado.
+
 ## RETURN
 
-## CLOSURE
+La palabra return forma parte de cualquier función o metodo.
+
+## CLOSURES
+
+Aquí vemos conceptos de funciones anónimas.
 
 # ARRAYS
 
 ## ARRAY SIMPLE
 
+Un array simple es cuando no definimos una key. Los valores no se identifican de manera directa.
+
 ## ARRAY COMPLEJO
+
+Los array complejos son llamados de igual forma arrays asociativos, donde prácticamente al valor le pones un nombre. Son arreglos clave, valor.
 
 ## FUNCIONES PHP PARA ARRAYS
 
+Estas son algunas de las funciones de PHP utilizadas para los arrays:
+
+- **sort**: Ordena un array.
+- **rsort**: Ordena un array en orden inverso.
+- **ksort**: Ordena un array por clave.
+- **krsort**: Ordena un array por clave en orden inverso.
+- **array_slice**: Extrae una parte de un array.
+- **array_chunk**: Divide un array en fragmentos.
+- **array_shift**: Quita un elemento del principio del array.
+- **array_pop**: Extrae el último elemento del final del array.
+- **array_unshift**: Añadir al inicio de un array uno o más elementos.
+- **array_push**: Inserta uno o más elementos al final de un array.
+- **array_flip**: Intercambia todas las claves de un array con sus valores asociados.
+
 ## COMPARACIÓN
 
+Una comparación que nos ayuda a crear selects dentro de arrays de manera dinámica.
 ## UNIÓN
 
 ## RESUMEN FINAL
