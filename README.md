@@ -6,6 +6,10 @@ Backend web development with PHP.
 
 En este curso empezamos con los fundamentos de la sintaxis del lenguaje PHP. Así como damos nuestros primeros pasos con Composer. Manejador de paquetes para proyectos PHP.
 
-## 02 - MANEJOD DE DATOS EN PHP
+## 02 - MANEJO DE DATOS EN PHP
 
 Este es un curso enfocado a dar formato a los datos, funciones y a trabajar con arreglos.
+
+## 03 - PROGRAMACIÓN ORIENTADA A OBJETOS EN PHP
+
+Un curso de programación Orientada a Objetos en PHP, y un poco de TDD.
