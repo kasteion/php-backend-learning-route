@@ -13,3 +13,7 @@ Este es un curso enfocado a dar formato a los datos, funciones y a trabajar con 
 ## 03 - PROGRAMACIÓN ORIENTADA A OBJETOS EN PHP
 
 Un curso de programación Orientada a Objetos en PHP, y un poco de TDD.
+
+## 04 - INTRODUCCIÓN A FRAMEWORKS DE PHP
+
+Un curso donde se arman algunas de las funcionalidades básicas que nos ofrecen los frameworks de PHP y se anima a trabajar con frameworks para entregar resultados profesionales de forma más rápida.

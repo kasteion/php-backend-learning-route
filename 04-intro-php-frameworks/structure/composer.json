@@ -1,0 +1,19 @@
+{
+    "name": "kasteion/structure",
+    "description": "Basic Project",
+    "authors": [
+        {
+            "name": "Fredy Castellón",
+            "email": "castellonbedoya@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    }
+}
