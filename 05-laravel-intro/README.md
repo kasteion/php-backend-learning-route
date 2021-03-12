@@ -686,7 +686,7 @@ Para crear un nuevo proyecto incluyendo autorización.
 
 Luego también ejecutamo este comando para crear un nuevo modelo, migración, factory y controlador:
 
-> php artisan make:model Post -mfc
+> php artisan make:model -mfc Post
 
 Ahora vamos a instalar un componente, buscamos en packagist eloquent-slug.
 
@@ -721,23 +721,77 @@ El slug es para que cuando demos click en un post el titulo se convierta en un s
 
 ## CREACIÓN DE TABLAS, ENTIDADES Y DATOS DE PRUEBA
 
+Se trabaja en el archivo de migrations de post, en el seeder y en el PostFactory.
+
 ## PLANTILLAS DE TRABAJO Y ENTENDIENDO EL LOGIN
 
-## DISEÑO VISUAL CON BOOTSTRAP
+Se trabaja en web.php y debemos crear el controlador de posts con:
+
+> php artisan make:controller PageController
+
+Y trabajamos en PageController.php
+
+También definimos las relaciones en los modelos User.php y Post.php
+
+Las vistas no existen aún, así que hay que crearlas, creamos los archivos: post.blade.php y posts.blade.php
 
 ## VISTA INDEX Y BOTONES DE ACCIÓN
 
+Borramos el PostController.php y lo creamos de nuevo con php artisan
+
+> php artisan make:controller backend/PostController --resource --model=Post
+
+Esto para tener organizado por carpetas las partes que deberían ser publicas y las privadas.
+
+Y también trabajamos en el index.blade.php
+
 ## IMPLEMENTACIÓN DEL FORMULARIO DE CREACIÓN
+
+Trabajamos en el archivo posts/create.blade.php
 
 ## IMPLEMENTACIÓN DEL GUARDADO
 
+Creamos una request con php artisan:
+
+> php artisan make:request PostRequest
+
+Y trabajamos en ./app/Http/Request/PostRequest.php
+
+También en el PostController.php
+
 ## CREANDO LA FUNCIÓN DE EDITAR UN POST
+
+Seguimos trabajando en nuestro PostController.php
 
 ## ACTUALIZANDO NUESTROS POSTS
 
+El proceso es más o menos iterativo. Crear Ruta -> Crear Controlador -> Crear Vista.
+
+Seguimos trabajando en el PostController:
+
+- La función destroy (Para elminar.)
+- La función update
+
 ## INTEGRANDO CONTENIDO AUDIOVISUAL
 
+En esta sección se trabaja en las páginas:
+
+- posts.blade.php
+- post.blade.php
+
+Se trabaja en el modelo:
+
+- Post.php para crear una función getGetImageAttribute
+
+Se ejecuta un comando php artisan para linkear el storage en public
+
+> php artisan storage:link
+
 # CONSTRUIR PROYECTO FINAL: API CON TDD (INTERMEDIO)
+
+Un programador verdaderamente profesional utiliza Testing...
+
+> laravel new api
 
 ## INTRODUCCIÓN AL TESTING
 
