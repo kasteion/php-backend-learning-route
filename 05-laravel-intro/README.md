@@ -478,7 +478,7 @@ Route::get('eloquent', function(){
 
 ## RELACIONES DE TABLAS
 
-Podemos volver a modificar las migraciones apra modificar el esquema.
+Podemos volver a modificar las migraciones para modificar el esquema.
 
 ```php
 Schema::create('posts', function (Blueprint $table){
@@ -789,23 +789,195 @@ Se ejecuta un comando php artisan para linkear el storage en public
 
 # CONSTRUIR PROYECTO FINAL: API CON TDD (INTERMEDIO)
 
+## INTRODUCCIÓN AL TESTING
+
 Un programador verdaderamente profesional utiliza Testing...
 
 > laravel new api
 
-## INTRODUCCIÓN AL TESTING
+Laravel viene preparado para trabajar con pruebas, todo empieza con el archivo phpunit.xml. En ester archivo vienen los test suites.
+
+```
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+```
+
+Están los "Unit" para las pruebas unitarias y están los "Feature" para las pruebas funcionales. En la carpeta ./tests, unos están en Unit y los otros están en Feature.
+
+Una prueba unitaria es aquella que nos ayuda a probar una pequeña pieza de código. Por ejemplo, si queremos probar una función.
+
+Las pruebas funcionales son cuando estámos probando un todo. Por ejemplo, si vamos a probar desde la ruta, estámos probando varias cosas... que llegue a la ruta, que funcione el controlador y que el estatus sea el correcto.
+
+Vamos a estar revisando nuestro sistema desde la terminal y no desde el navegador. Existe el comando para crear test:
+
+Este comando va a crear un test dentro de los test funcionales.
+
+> php artisan make:test UserTest
+
+Este comando va a crear un test dentro de los test unitarios.
+
+> php artisan make:test UserTest --unit
+
+Si queremos ejecutar los tests, lo hacemos con el siguiente comando:
+
+> vendor/bin/phpunit
 
 ## METODOLOGÍA TDD Y TESTING HTTP
 
+**Testing HTTP**: Probar los accesos HTTP, pero si estamos haciendolo con testing automatizado, ya no estamos utilizando el navegador.
+
+**TDD**: Test Driven Develpment. Desarrollo guiado por pruebas, es una práctica de ingeniería de software que involucra otras dos prácticas: Escribir las pruebas primero (Test First Development) y REfactorización (Refactoring).
+
+1. El primer paso se llama **RED**, consiste en escribir un test que falle. Escribimos una prueba que no tiene código creado y va a ocasionar una falla.
+2. Es segundo paso consiste en construir el código más sencillo para que la prueba funcione. Y pasamos al estado **GREEN**.
+3. El tercer paso es **REFACTOR**. Se trata de construir nuestro código de manera elegante y entendible para que nuestros compañeros lo entiendan, además que asegurar que la prueba siga en verde. Elimnar la redundancia.
+
+Ejercicio:
+
+1. Eliminemos todos los tests.
+2. Ejecutemos:
+
+> php artisan make:test PageTest
+>
+> ./vendor/bin/phpunit
+
+Vamos al test y cambiamos
+
+```php
+public function test_about()
+{
+    $response = $this->get('\about');
+    $response->assertStatus(200);
+}
+```
+
+Ejecutamos:
+
+> ./vendor/bin/phpunit
+
+Y el test falla
+
+Entonces tenemos que crear la ruta para que funcione el test
+
+```php
+Route::get('/about', function() {
+    return view('welcome';)
+});
+```
+
+Ejecutamos el test
+
+> ./vendor/bin/phpunit
+
+Y el test pasa.
+
+Ahora puedo refactorizar digamos cambiando
+
+```php
+Route::view('/about', 'welcome');
+```
+
+Y volvemos a ejecutar el test
+
+> ./vendor/bin/phpunit
+
+Y pasa la prueba.
+
+También exsite el comando php artisan para ejecutar los tests así:
+
+> php artisan test
+
 ## PROYECTO API CON TDD: PRESENTACIÓN Y CONFIGURACIÓN INICIAL
+
+Ejecutamos:
+
+> php artisan make:test Http/Controllers/Api/PostControllerTest
+>
+> php artisan make:model Post -fm
+>
+> php artisan make:controller Api/PostController --api --model=Post
+
+Esto me parece que es opcional. Parece que desde Laravel 6 ya viene configurado que las pruebas se hacen en memoria por default.
+
+Creamos el archivo database.sqlite en la carpeta ./database
+
+Y cambiamos en config/database.php la configuración para sqlite dejando:
+
+```php
+'database' => database_path('database.sqlite')
+```
+
+Si, esto viene comentado en el phpunit.xml
+
+```xml
+    <php>
+        <server name="APP_ENV" value="testing"/>
+        <server name="BCRYPT_ROUNDS" value="4"/>
+        <server name="CACHE_DRIVER" value="array"/>
+        <!-- <server name="DB_CONNECTION" value="sqlite"/> -->
+        <!-- <server name="DB_DATABASE" value=":memory:"/> -->
+        <server name="MAIL_MAILER" value="array"/>
+        <server name="QUEUE_CONNECTION" value="sync"/>
+        <server name="SESSION_DRIVER" value="array"/>
+        <server name="TELESCOPE_ENABLED" value="false"/>
+    </php>
+```
+
+Entonces deplano está en memoria.
 
 ## STORE CON TDD
 
+Las funciones de test siempre deben empezar pos test\_(El nombre de lo que vamos a probar).
+
+Entonces el test de store sería:
+
+```php
+public function test_store()
+{
+    $response = $this->json('POST', '/api/posts', [
+        'title' => 'El post de prueba',
+        'body' => 'El contenido'
+    ]);
+    $response->assertJsonStructure(['id', 'title', 'created_at', 'updated_at'])
+        ->assertJson(['title' => 'El post de prueba'])
+        ->assertStatus(201); // Ok, creado un recurso
+    $this->assertDatabaseHas('posts', ['title' => 'El post de prueba'])
+}
+```
+
+La prueba falla obviamente. Porque hay que hacer:
+
+1. Las migraciones.
+2. Las el modelo Post.php
+3. El PostController.php
+
 ## REFACTORIZACIÓN Y VALIDACIÓN EN STORE
+
+El PosController se puede refactorizar.
+
+Podemos agregar un test para validar el título.
+
+Esta validación se hace creando una Request así que...
+
+> php artisan make:request PostRequest
 
 ## SHOW CON TDD
 
 ## UPDATE Y VALIDACIÓN CON TDD
+
+El método store es muy parecido al método update.
+
+Se puede ejecutar:
+
+> ./vendor/bin/phpunit --filter test_update
+
+Para solo realizar un test, por si estamos probando un sistema demasiado grande.
 
 ## DELETE CON TDD
 
